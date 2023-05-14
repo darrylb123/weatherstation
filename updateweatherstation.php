@@ -103,6 +103,8 @@ $mqtt->publish($mqttRoot .'windgustkph', toKM($_GET["windgustmph"]), 0);
 $mqtt->publish($mqttRoot .'winddir',wind_cardinal( $_GET["winddir"]), 0);
 $mqtt->publish($mqttRoot .'rainmm', toMM($_GET["rainin"]), 0);
 $mqtt->publish($mqttRoot .'dailyrainmm', toMM($_GET["dailyrainin"]), 0);
+$mqtt->publish($mqttRoot .'weeklyrainmm', toMM($_GET["weeklyrainin"]), 0);
+$mqtt->publish($mqttRoot .'monthlyrainmm', toMM($_GET["monthlyrainin"]), 0);
 $mqtt->publish($mqttRoot .'indoortemp', toC($_GET["indoortempf"]), 0);
 $mqtt->publish($mqttRoot .'indoorhumidity', $_GET["indoorhumidity"], 0);
 

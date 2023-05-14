@@ -8,6 +8,8 @@ Modified to use with Fedora Linux
 ## Install httpd
 ```
 $ sudo dnf install httpd php
+$ sudo systemctl enable httpd
+$ sudo systemctl start httpd
 ```
 
 ## Clone the repo
@@ -15,12 +17,14 @@ You will need to create the directory /var/www/html/weatherstation and change th
 ```
 $ sudo mkdir /var/www/html/weatherstation
 $ sudo chown <you>:<you> /var/www/html/weatherstation
+$ cd /var/www/html
+$ got clone git@github.com:darrylb123/weatherstation.git
 ```
 
 ## Enable http and https access through firewalld
 ```
-$ sudo firewall-cmd --zone=public --add-service=http
-$ sudo firewall-cmd --zone=public --add-service=https
+$ sudo firewall-cmd --permanent  --add-service=http
+$ sudo firewall-cmd --permanent  --add-service=https
 ```
 
 ## Add PHP MQTT
