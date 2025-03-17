@@ -8,7 +8,7 @@ use PhpMqtt\Client\Exceptions\ConnectingToBrokerFailedException;
 use PhpMqtt\Client\Exceptions\DataTransferException;
 use PhpMqtt\Client\Exceptions\UnexpectedAcknowledgementException;
 
-$server = "192.168.12.110";
+$server = "mqtt";
 $port = 1883;
 $client_id = "weather-data-publisher";
 $mqttRoot = "pws/sensors/";
@@ -93,20 +93,40 @@ function wind_cardinal( $degree ) {
 // SHUFF IT TO MQTT
 $mqtt = new MqttClient($server, $port, $client_id);
 $mqtt->connect();
-
-$mqtt->publish($mqttRoot .'baromin', toHPA($_GET["baromin"]), 0);
-$mqtt->publish($mqttRoot .'temp', toC($_GET["tempf"]), 0);
-$mqtt->publish($mqttRoot .'dewpt', toC($_GET["dewptf"]), 0);
-$mqtt->publish($mqttRoot .'humidity', $_GET["humidity"], 0);
-$mqtt->publish($mqttRoot .'windspeedkph', toKM($_GET["windspeedmph"]), 0);
-$mqtt->publish($mqttRoot .'windgustkph', toKM($_GET["windgustmph"]), 0);
-$mqtt->publish($mqttRoot .'winddir',wind_cardinal( $_GET["winddir"]), 0);
-$mqtt->publish($mqttRoot .'rainmm', toMM($_GET["rainin"]), 0);
-$mqtt->publish($mqttRoot .'dailyrainmm', toMM($_GET["dailyrainin"]), 0);
-$mqtt->publish($mqttRoot .'weeklyrainmm', toMM($_GET["weeklyrainin"]), 0);
-$mqtt->publish($mqttRoot .'monthlyrainmm', toMM($_GET["monthlyrainin"]), 0);
-$mqtt->publish($mqttRoot .'indoortemp', toC($_GET["indoortempf"]), 0);
-$mqtt->publish($mqttRoot .'indoorhumidity', $_GET["indoorhumidity"], 0);
+if (isset($_GET["baromin"])) 
+	$mqtt->publish($mqttRoot .'baromin', toHPA($_GET["baromin"]), 0);
+if (isset($_GET["tempf"])) 
+	$mqtt->publish($mqttRoot .'temp', toC($_GET["tempf"]), 0);
+if (isset($_GET["dewptf"])) 
+	$mqtt->publish($mqttRoot .'dewpt', toC($_GET["dewptf"]), 0);
+if (isset($_GET["humidity"])) 
+	$mqtt->publish($mqttRoot .'humidity', $_GET["humidity"], 0);
+if (isset($_GET["windspeedmph"])) 
+	$mqtt->publish($mqttRoot .'windspeedkph', toKM($_GET["windspeedmph"]), 0);
+if (isset($_GET["windgustmph"])) 
+	$mqtt->publish($mqttRoot .'windgustkph', toKM($_GET["windgustmph"]), 0);
+if (isset($_GET["winddir"])) 
+	$mqtt->publish($mqttRoot .'winddir',wind_cardinal( $_GET["winddir"]), 0);
+if (isset($_GET["rainin"])) 
+	$mqtt->publish($mqttRoot .'rainmm', toMM($_GET["rainin"]), 0);
+if (isset($_GET["dailyrainin"])) 
+	$mqtt->publish($mqttRoot .'dailyrainmm', toMM($_GET["dailyrainin"]), 0);
+if (isset($_GET["weeklyrainin"])) 
+	$mqtt->publish($mqttRoot .'weeklyrainmm', toMM($_GET["weeklyrainin"]), 0);
+else
+	$mqtt->publish($mqttRoot .'weeklyrainmm', "Undefined",0);
+if (isset($_GET["monthlyrainin"])) 
+	$mqtt->publish($mqttRoot .'monthlyrainmm', toMM($_GET["monthlyrainin"]), 0);
+else
+	$mqtt->publish($mqttRoot .'monthlyrainmm', "Undefined",0);
+if (isset($_GET["indoortempf"])) 
+	$mqtt->publish($mqttRoot .'indoortemp', toC($_GET["indoortempf"]), 0);
+else
+	$mqtt->publish($mqttRoot .'indoortemp', "Undefined",0);
+if (isset($_GET["indoorhumidity"])) 
+	$mqtt->publish($mqttRoot .'indoorhumidity', $_GET["indoorhumidity"], 0);
+else
+	$mqtt->publish($mqttRoot .'indoorhumidity', "Undefined",0);
 
 $mqtt->disconnect();
 
